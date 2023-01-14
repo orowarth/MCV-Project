@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCBAWebApp", "MCBAWebApp\MCBAWebApp.csproj", "{431DA6A5-08F8-44FF-BF75-433E447DF157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCBAWebApp", "MCBAWebApp\MCBAWebApp.csproj", "{431DA6A5-08F8-44FF-BF75-433E447DF157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCBADataLibrary", "MCBADataLibrary\MCBADataLibrary.csproj", "{548EB6A5-58DA-4A91-8107-37204B0FBCE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
