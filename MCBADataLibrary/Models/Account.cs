@@ -30,6 +30,7 @@ public class Account
     [NotMapped]
     public decimal MinimumBalance { get; set; }
 
+    [ForeignKey(nameof(Customer))]
     public int CustomerID { get; set; }
     public Customer Customer { get; set; } = null!;
 

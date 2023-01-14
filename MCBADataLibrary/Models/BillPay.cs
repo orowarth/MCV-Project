@@ -8,7 +8,7 @@ public class BillPay
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int BillPayID { get; set; }
 
-    public Account Account { get; set; }
+    public Account Account { get; set; } = null!;
 
     [ForeignKey(nameof(Account))]
     public int AccountNumber { get; set; }
@@ -16,7 +16,7 @@ public class BillPay
     [ForeignKey(nameof(Payee))]
     public int PayeeID { get; set; }
 
-    public Payee Payee { get; set; }
+    public Payee Payee { get; set; } = null!;
 
     [Column(TypeName = "money")]
     public decimal Amount { get; set; }
