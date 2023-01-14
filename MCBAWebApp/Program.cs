@@ -8,7 +8,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BankDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BankContext"), builder => builder.MigrationsAssembly("MCBAWebApp"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("BankContext"),
+        builder => builder.MigrationsAssembly("MCBAWebApp"));
 });
 
 var app = builder.Build();
