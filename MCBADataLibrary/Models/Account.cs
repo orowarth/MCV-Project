@@ -6,6 +6,13 @@ namespace MCBADataLibrary.Models;
 
 public class Account
 {
+    public Account(AccountType accountType)
+    {
+        AccountType = accountType;
+        MinimumOpeningBalance = (accountType == AccountType.Savings) ? 50 : 500;
+        MinimumBalance = (accountType == AccountType.Savings) ? 0 : 300;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     [Display(Name = "Account Number")]
     public int AccountNumber { get; set; }
@@ -13,14 +20,19 @@ public class Account
     [Display(Name = "Type")]
     public AccountType AccountType { get; set; }
 
-    public int CustomerID { get; set; }
-    public Customer Customer { get; set; } = null!;
-
     [Column(TypeName = "money")]
     [DataType(DataType.Currency)]
     public decimal Balance { get; set; }
 
-    // Set ambiguous navigation property with InverseProperty annotation or Fluent-API in the McbaContext.cs file.
-    //[InverseProperty("Account")]
-    public  List<Transaction> Transactions { get; set; }
+    [NotMapped]
+    public decimal MinimumOpeningBalance { get; set; }
+
+    [NotMapped]
+    public decimal MinimumBalance { get; set; }
+
+    public int CustomerID { get; set; }
+    public Customer Customer { get; set; } = null!;
+
+    [InverseProperty("Account")]
+    public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

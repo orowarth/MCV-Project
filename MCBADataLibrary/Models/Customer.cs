@@ -14,10 +14,9 @@ public class Customer
     [Required, MaxLength(50)]
     public required string Name { get; set; }
 
-    [Required]
     [StringLength(maximumLength: 11, MinimumLength = 11)]
     [RegularExpression(@"(\d{3}\s){2}\d{3}")]
-    public required string TFN { get; set; }
+    public string? TFN { get; set; }
 
     [MaxLength(50)]
     public string? Address { get; set; }
@@ -31,6 +30,8 @@ public class Customer
     [StringLength(maximumLength: 12, MinimumLength = 12)]
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
+
+    public Login Login { get; set; } = null!;
 
     public List<Account> Accounts { get; set; }
 }

@@ -9,6 +9,7 @@ public class Login
     [StringLength(8, MinimumLength = 8)]
     public required string LoginID { get; set; }
 
+    [ForeignKey(nameof(Customer))]
     public int CustomerID { get; set; }
     public Customer Customer { get; set; } = null!;
 
