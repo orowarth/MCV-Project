@@ -1,4 +1,5 @@
 using MCBADataLibrary.Data;
+using MCBAWebApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,11 @@ builder.Services.AddDbContext<BankDbContext>(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope()) 
+{
+    await WebDataAccess.InitalizeData(scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
