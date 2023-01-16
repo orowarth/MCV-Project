@@ -1,11 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace MCBAWebApp.Models;
 
 public class LoginViewModel
 {
     [Required]
-    public int LoginID { get; set; }
+    [DisplayName("Login ID")]
+    public string LoginID { get; set; }
 
     [Required]
     public string Password { get; set; }
