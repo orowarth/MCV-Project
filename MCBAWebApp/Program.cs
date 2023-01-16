@@ -14,6 +14,11 @@ builder.Services.AddDbContext<BankDbContext>(options =>
         builder => builder.MigrationsAssembly("MCBAWebApp"));
 });
 
+builder.Services.AddSession(options => 
+{
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()) 
