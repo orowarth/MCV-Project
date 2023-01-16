@@ -33,5 +33,11 @@ namespace MCBAWebApp.Controllers
             HttpContext.Session.SetString(nameof(Customer.Name), login.Customer.Name);
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Logout() 
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
