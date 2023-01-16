@@ -14,6 +14,7 @@ builder.Services.AddDbContext<BankDbContext>(options =>
         builder => builder.MigrationsAssembly("MCBAWebApp"));
 });
 
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => 
 {
     options.Cookie.IsEssential = true;
@@ -40,6 +41,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
