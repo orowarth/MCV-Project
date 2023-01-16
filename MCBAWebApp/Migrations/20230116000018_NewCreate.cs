@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MCBAWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class NewCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,8 +20,8 @@ namespace MCBAWebApp.Migrations
                     TFN = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     City = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    State = table.Column<int>(type: "int", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: true),
+                    State = table.Column<int>(type: "int", nullable: true),
+                    PostCode = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true)
                 },
                 constraints: table =>
@@ -87,7 +87,7 @@ namespace MCBAWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BillPays",
+                name: "BillPayments",
                 columns: table => new
                 {
                     BillPayID = table.Column<int>(type: "int", nullable: false)
@@ -100,15 +100,15 @@ namespace MCBAWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BillPays", x => x.BillPayID);
+                    table.PrimaryKey("PK_BillPayments", x => x.BillPayID);
                     table.ForeignKey(
-                        name: "FK_BillPays_Accounts_AccountNumber",
+                        name: "FK_BillPayments_Accounts_AccountNumber",
                         column: x => x.AccountNumber,
                         principalTable: "Accounts",
                         principalColumn: "AccountNumber",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BillPays_Payees_PayeeID",
+                        name: "FK_BillPayments_Payees_PayeeID",
                         column: x => x.PayeeID,
                         principalTable: "Payees",
                         principalColumn: "PayeeID",
@@ -150,13 +150,13 @@ namespace MCBAWebApp.Migrations
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BillPays_AccountNumber",
-                table: "BillPays",
+                name: "IX_BillPayments_AccountNumber",
+                table: "BillPayments",
                 column: "AccountNumber");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BillPays_PayeeID",
-                table: "BillPays",
+                name: "IX_BillPayments_PayeeID",
+                table: "BillPayments",
                 column: "PayeeID");
 
             migrationBuilder.CreateIndex(
@@ -180,7 +180,7 @@ namespace MCBAWebApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BillPays");
+                name: "BillPayments");
 
             migrationBuilder.DropTable(
                 name: "Logins");
