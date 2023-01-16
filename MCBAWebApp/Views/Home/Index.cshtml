@@ -1,8 +1,24 @@
-﻿@{
+﻿@using MCBADataLibrary.Models;
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center my-5">
+    @{
+        var isLoggedIn = Context.Session.GetInt32(nameof(Customer.CustomerID)).HasValue;
+    }
+
+    @if (isLoggedIn)
+    {
+        <h1 class="display-6">Welcome, @Context.Session.GetString(nameof(Customer.Name))</h1>
+    }
+    else
+    {
+        <h1 class="display-6">Most Common Bank of Australia</h1>
+        <p class="my-4">The Most Common Bank of Australia provides customers with the finsest banking experience in Australia. To get started, log in here</p>
+        <p>
+            <a asp-action="Login" asp-controller="Login" class="btn btn-lg btn-primary">Login</a>
+        </p>
+    }
+
 </div>
