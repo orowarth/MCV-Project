@@ -8,7 +8,7 @@ public class Transaction
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TransactionID { get; set; }
-    public TransactionType TransactionType { get; set; }
+    public TransactionType TransactionType { get; set; } = TransactionType.Deposit;
 
     [ForeignKey(nameof(Account))]
     public int AccountNumber { get; set; }

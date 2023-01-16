@@ -5,44 +5,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleHashing.Net;
 
-namespace MCBAWebApp.Controllers
+namespace MCBAWebApp.Controllers;
+
+public class LoginController : Controller
 {
-    public class LoginController : Controller
+    private readonly BankDbContext _context;
+    private static readonly SimpleHash simpleHash = new();
+
+    public LoginController(BankDbContext context) => _context = context;
+
+    public IActionResult Login() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel loginViewData)
     {
-        private readonly BankDbContext _context;
-        private static readonly SimpleHash simpleHash = new();
+        var login = await _context.Logins
+            .Include(l => l.Customer)
+            .FirstOrDefaultAsync(l => l.LoginID == loginViewData.LoginID);
 
-        public LoginController(BankDbContext context) => _context = context;
-
-        public IActionResult Login() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewData)
+        if (!ModelState.IsValid)
         {
-            var login = await _context.Logins
-                .Include(l => l.Customer)
-                .FirstOrDefaultAsync(l => l.LoginID == loginViewData.LoginID);
-
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            if (login is null || !simpleHash.Verify(loginViewData.Password, login.PasswordHash))
-            {
-                ModelState.AddModelError("LoginFailure", "Login ID and/or password were incorrect.");
-                return View();
-            }
-
-            HttpContext.Session.SetInt32(nameof(Customer.CustomerID), login.CustomerID);
-            HttpContext.Session.SetString(nameof(Customer.Name), login.Customer.Name);
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
-        public IActionResult Logout()
+        if (login is null || !simpleHash.Verify(loginViewData.Password, login.PasswordHash))
         {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            ModelState.AddModelError("LoginFailure", "Login ID and/or password were incorrect.");
+            return View();
         }
+
+        HttpContext.Session.SetInt32(nameof(Customer.CustomerID), login.CustomerID);
+        HttpContext.Session.SetString(nameof(Customer.Name), login.Customer.Name);
+        return RedirectToAction("Index", "Customer");
+    }
+
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index", "Home");
     }
 }
