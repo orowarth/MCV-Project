@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCBAWebApp.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20230116000018_NewCreate")]
-    partial class NewCreate
+    [Migration("20230116073431_NewMigration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace MCBAWebApp.Migrations
                         .HasColumnType("money");
 
                     b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FreeTransactions")
                         .HasColumnType("int");
 
                     b.HasKey("AccountNumber");

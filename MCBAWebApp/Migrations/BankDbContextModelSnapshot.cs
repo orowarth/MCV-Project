@@ -36,6 +36,9 @@ namespace MCBAWebApp.Migrations
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
+                    b.Property<int>("FreeTransactions")
+                        .HasColumnType("int");
+
                     b.HasKey("AccountNumber");
 
                     b.HasIndex("CustomerID");
