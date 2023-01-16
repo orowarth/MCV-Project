@@ -22,10 +22,10 @@ public class Customer
     public string? Address { get; set; }
     [MaxLength(60)]
     public string? City { get; set; }
-    public State State { get; set; }
+    public State? State { get; set; }
 
     [StringLength(maximumLength: 4, MinimumLength = 4)]
-    public string? PostalCode { get; set;}
+    public string? PostCode { get; set;}
     
     [StringLength(maximumLength: 12, MinimumLength = 12)]
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
