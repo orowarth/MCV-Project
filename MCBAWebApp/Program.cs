@@ -14,6 +14,12 @@ builder.Services.AddDbContext<BankDbContext>(options =>
         builder => builder.MigrationsAssembly("MCBAWebApp"));
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => 
+{
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()) 
@@ -35,6 +41,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
