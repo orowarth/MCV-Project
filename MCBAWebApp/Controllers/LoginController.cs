@@ -1,14 +1,16 @@
 using MCBADataLibrary.Data;
-using Microsoft.EntityFrameworkCore;
 using MCBADataLibrary.Models;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SimpleHashing.Net;
 
 namespace MCBAWebApp.Controllers
 {
     public class LoginController : Controller
     {
         private readonly BankDbContext _context;
+        private static readonly SimpleHash simpleHash = new();
 
         public LoginController(BankDbContext context) => _context = context;
 
@@ -21,20 +23,23 @@ namespace MCBAWebApp.Controllers
                 .Include(l => l.Customer)
                 .FirstOrDefaultAsync(l => l.LoginID == loginViewData.LoginID);
 
-            if (login is null)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            // Validate Password using hashing
+            if (login is null || !simpleHash.Verify(loginViewData.Password, login.PasswordHash))
+            {
+                ModelState.AddModelError("LoginFailure", "Login ID and/or password were incorrect.");
+                return View();
+            }
 
-            // Otherwise...
             HttpContext.Session.SetInt32(nameof(Customer.CustomerID), login.CustomerID);
             HttpContext.Session.SetString(nameof(Customer.Name), login.Customer.Name);
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Logout() 
+        public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
