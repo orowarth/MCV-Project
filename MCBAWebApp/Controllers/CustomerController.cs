@@ -86,4 +86,41 @@ public class CustomerController : Controller
             AccountNumber = id
         });
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Transfer(TransferViewModel viewModel)
+    {
+        viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
+
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        if (viewModel.AccountNumber == viewModel.DestinationAccount)
+        {
+            ModelState.AddModelError(nameof(viewModel.DestinationAccount), "Destination account cannot be the same as current selected account");
+            return View(viewModel);
+        }
+
+        var destinationAccount = await _context.Accounts.FindAsync(viewModel.DestinationAccount);
+
+        if (destinationAccount is null)
+        {
+            ModelState.AddModelError(nameof(viewModel.DestinationAccount), "No account was found with that ID");
+            return View(viewModel);
+        }
+
+        if (!viewModel.Account!.ValidTransfer(viewModel.Amount))
+        {
+            ModelState.AddModelError(nameof(viewModel.Amount), "You cannot withdraw more than your available balance");
+            return View(viewModel);
+        }
+
+        viewModel.Account.SendTransfer(viewModel.Amount, viewModel.Comment, viewModel.DestinationAccount);
+        destinationAccount.ReceiveTransfer(viewModel.Amount, viewModel.Comment);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index");
+    }
 }
