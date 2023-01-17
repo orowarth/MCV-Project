@@ -52,4 +52,13 @@ public class CustomerController : Controller
 
         return RedirectToAction("Index");
     }
+
+    public async Task<IActionResult> Transfer(int id)
+    {
+        return View(new TransferViewModel()
+        {
+            Account = await _context.Accounts.FirstAsync(c => c.AccountNumber == id),
+            AccountNumber = id
+        });
+    }
 }
