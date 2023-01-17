@@ -6,6 +6,10 @@ namespace MCBADataLibrary.Models;
 
 public class Account
 {
+
+    const decimal WithdrawalFee = 0.05m;
+    const decimal TransferFee = 0.05m;
+
     public Account(AccountType accountType)
     {
         AccountType = accountType;
@@ -63,42 +67,74 @@ public class Account
         Balance -= amount;
 
         if (FreeTransactions == 0)
-        {
-            AddWithdrawlFee(amount, comment);
-        }
+            AddFee(WithdrawalFee, comment);
         else
-        {
             FreeTransactions--;
-        }
     }
 
-    public void AddWithdrawlFee(decimal amount, string? comment)
+    public void SendTransfer(decimal amount, string? comment, int destination)
     {
-        const decimal withdrawalFee = 0.05m;
         Transactions.Add(new Transaction
         {
-            Amount = withdrawalFee,
+            Amount = amount,
+            TransactionType = TransactionType.Transfer,
+            Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
+            TransactionTimeUtc = DateTime.UtcNow,
+            DestinationAccountNumber = destination
+        });
+        Balance -= amount;
+
+        if (FreeTransactions == 0)
+            AddFee(TransferFee, comment);
+        else
+            FreeTransactions--;
+    }
+
+    public void ReceiveTransfer(decimal amount, string? comment)
+    {
+        Transactions.Add(new Transaction
+        {
+            Amount = amount,
+            TransactionType = TransactionType.Transfer,
+            Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
+            TransactionTimeUtc = DateTime.UtcNow,
+        });
+        Balance += amount;
+    }
+
+    public void AddFee(decimal fee, string? comment)
+    {
+        Transactions.Add(new Transaction
+        {
+            Amount = fee,
             TransactionType = TransactionType.ServiceCharge,
             Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
             TransactionTimeUtc = DateTime.UtcNow,
         });
-        Balance -= withdrawalFee;
+        Balance -= fee;
     }
 
     public bool ValidWithdrawal(decimal amount)
     {
-        const decimal withdrawalFee = 0.05m;
         var availableBalance = Balance - MinimumBalance;
 
         if (availableBalance < amount)
-        {
             return false;
-        }
 
-        if ((FreeTransactions == 0) && (availableBalance < amount + withdrawalFee))
-        {
+        if ((FreeTransactions == 0) && (availableBalance < amount + WithdrawalFee))
             return false;
-        }
+
+        return true;
+    }
+    public bool ValidTransfer(decimal amount)
+    {
+        var availableBalance = Balance - MinimumBalance;
+
+        if (availableBalance < amount)
+            return false;
+
+        if ((FreeTransactions == 0) && (availableBalance < amount + TransferFee))
+            return false;
 
         return true;
     }
