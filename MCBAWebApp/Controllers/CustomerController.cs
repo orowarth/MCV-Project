@@ -35,16 +35,19 @@ public class CustomerController : Controller
     public async Task<IActionResult> Deposit(DepositViewModel viewModel)
     {
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
-
         if (!ModelState.IsValid)
-        {
             return View(viewModel);
-        }
 
+        return View(nameof(ConfirmDeposit), viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ConfirmDeposit(DepositViewModel viewModel)
+    {
+        viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
         viewModel.Account!.AddDeposit(viewModel.Amount, viewModel.Comment);
         await _context.SaveChangesAsync();
-
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Withdraw(int id)
@@ -62,20 +65,24 @@ public class CustomerController : Controller
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
 
         if (!ModelState.IsValid)
-        {
             return View(viewModel);
-        }
-
+        
         if (!viewModel.Account!.ValidWithdrawal(viewModel.Amount))
         {
             ModelState.AddModelError(nameof(viewModel.Amount), "You cannot withdraw more than your available balance");
             return View(viewModel);
         }
 
-        viewModel.Account.AddWithdrawal(viewModel.Amount, viewModel.Comment);
-        await _context.SaveChangesAsync();
+        return View(nameof(ConfirmWithdrawal), viewModel);
+    }
 
-        return RedirectToAction("Index");
+    [HttpPost]
+    public async Task<IActionResult> ConfirmWithdrawal(WithdrawViewModel viewModel)
+    {
+        viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
+        viewModel.Account!.AddWithdrawal(viewModel.Amount, viewModel.Comment);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Transfer(int id)
@@ -93,9 +100,7 @@ public class CustomerController : Controller
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
 
         if (!ModelState.IsValid)
-        {
             return View(viewModel);
-        }
 
         if (viewModel.AccountNumber == viewModel.DestinationAccount)
         {
@@ -117,10 +122,18 @@ public class CustomerController : Controller
             return View(viewModel);
         }
 
-        viewModel.Account.SendTransfer(viewModel.Amount, viewModel.Comment, viewModel.DestinationAccount);
-        destinationAccount.ReceiveTransfer(viewModel.Amount, viewModel.Comment);
+        return View(nameof(ConfirmTransfer), viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ConfirmTransfer(TransferViewModel viewModel)
+    {
+        viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
+        viewModel.Account!.SendTransfer(viewModel.Amount, viewModel.Comment, viewModel.DestinationAccount);
+        var destinationAccount = await _context.Accounts.FindAsync(viewModel.DestinationAccount);
+        destinationAccount!.ReceiveTransfer(viewModel.Amount, viewModel.Comment);
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 }
