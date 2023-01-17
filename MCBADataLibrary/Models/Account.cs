@@ -39,13 +39,25 @@ public class Account
     [InverseProperty("Account")]
     public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
+    public void AddDeposit(decimal amount, string? comment)
+    {
+        Transactions.Add(new Transaction
+        {
+            Amount = amount,
+            TransactionType = TransactionType.Deposit,
+            Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
+            TransactionTimeUtc = DateTime.UtcNow,
+        });
+        Balance += amount;
+    }
+
     public void AddWithdrawal(decimal amount, string? comment)
     {
         Transactions.Add(new Transaction
         {
             Amount = amount,
             TransactionType = TransactionType.Withdrawal,
-            Comment = (string.IsNullOrWhiteSpace(comment)) ? null : comment,
+            Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
             TransactionTimeUtc = DateTime.UtcNow,
         });
         Balance -= amount;
@@ -67,7 +79,7 @@ public class Account
         {
             Amount = withdrawalFee,
             TransactionType = TransactionType.ServiceCharge,
-            Comment = (string.IsNullOrWhiteSpace(comment)) ? null : comment,
+            Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
             TransactionTimeUtc = DateTime.UtcNow,
         });
         Balance -= withdrawalFee;
