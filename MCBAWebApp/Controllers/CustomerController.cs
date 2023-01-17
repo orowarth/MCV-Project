@@ -1,11 +1,13 @@
 using MCBADataLibrary.Data;
 using MCBADataLibrary.Models;
+using MCBAWebApp.Filters;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MCBAWebApp.Controllers;
 
+[AuthorizeCustomer]
 public class CustomerController : Controller
 {
     private readonly BankDbContext _context;

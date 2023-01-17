@@ -1,5 +1,6 @@
 ﻿using MCBADataLibrary.Data;
 using MCBADataLibrary.Models;
+using MCBAWebApp.Filters;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using X.PagedList;
 
 namespace MCBAWebApp.Controllers;
 
+[AuthorizeCustomer]
 public class StatementsController : Controller
 {
     private readonly BankDbContext _context;
