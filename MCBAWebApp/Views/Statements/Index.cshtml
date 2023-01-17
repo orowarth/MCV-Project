@@ -1,11 +1,11 @@
 ﻿@using MCBADataLibrary.Models;
 @model Customer
 @{
-    ViewData["Title"] = "Accounts";
+    ViewData["Title"] = "My Statements";
 }
 
 <div>
-    <h3>Your Accounts</h3>
+    <h3>Your Statements</h3>
     <table class="table">
         <tr>
             <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountNumber)</th>
@@ -20,9 +20,7 @@
                 <td>@Html.DisplayFor(x => account.AccountType)</td>
                 <td>@Html.DisplayFor(x => account.Balance)</td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Deposit" asp-route-id="@account.AccountNumber">Deposit</a>
-                    <a class="btn btn-primary" asp-action="Withdraw" asp-route-id="@account.AccountNumber">Withdraw</a>
-                    <a class="btn btn-primary" asp-action="Transfer" asp-route-id="@account.AccountNumber">Transfer</a>
+                    <a class="btn btn-primary" asp-action="Statement" asp-route-id="@account.AccountNumber">View Statements</a>
                 </td>
             </tr>
         }
