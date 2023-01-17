@@ -22,26 +22,26 @@ public class CustomerController : Controller
         return View(customer);
     }
 
-    public async Task<IActionResult> Deposit(int id) 
+    public async Task<IActionResult> Deposit(int id)
     {
         return View(new DepositViewModel()
         {
-            Account = await _context.Accounts.FirstAsync( a => a.AccountNumber == id),
+            Account = await _context.Accounts.FirstAsync(a => a.AccountNumber == id),
             AccountNumber = id
         });
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Deposit(DepositViewModel viewModel)
     {
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
-        
+
         if (!ModelState.IsValid)
         {
             return View(viewModel);
         }
-        
-        viewModel.Account.AddDepost(viewModel.Amount, viewModel.Comment);
+
+        viewModel.Account!.AddDeposit(viewModel.Amount, viewModel.Comment);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Index");
@@ -77,6 +77,4 @@ public class CustomerController : Controller
 
         return RedirectToAction("Index");
     }
-
-   
 }
