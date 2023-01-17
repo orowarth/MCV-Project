@@ -8,7 +8,7 @@ public class Account
 {
 
     const decimal WithdrawalFee = 0.05m;
-    const decimal TransferFee = 0.05m;
+    const decimal TransferFee = 0.1m;
 
     public Account(AccountType accountType)
     {
