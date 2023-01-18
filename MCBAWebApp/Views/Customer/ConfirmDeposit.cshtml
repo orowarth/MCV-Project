@@ -5,10 +5,10 @@
 
 <h1 class="display-6">Deposit Confirmation</h1>
 <h1 class="display-6">Account Number: @Model.Account!.AccountNumber (@Model.Account.AccountType)</h1>
-<h1 class="display-6">New Balance: @((Model.Account.Balance - Model.Amount).ToString("C2"))</h1>
+<h1 class="display-6">Current Balance: @((Model.Account.Balance).ToString("C2"))</h1>
 <h1 class="display-6">
-    New Available Balance:
-    @((Model.Account.Balance - Model.Account.MinimumBalance - Model.Amount).ToString("C2"))
+    Current Available Balance:
+    @((Model.Account.Balance - Model.Account.MinimumBalance).ToString("C2"))
 </h1>
 
 <div class="row">
@@ -17,11 +17,16 @@
             <input type="hidden" asp-for="AccountNumber" />
             <div class="form-group my-2">
                 <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" readonly />
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input asp-for="Amount" class="form-control" readonly />
+                </div>
             </div>
             <div class="form-group my-2">
                 <label asp-for="Comment" class="control-label"></label>
-                <input asp-for="Comment" class="form-control" readonly/>
+                <input asp-for="Comment" class="form-control" readonly />
             </div>
             <div class="form-group my-2">
                 <input type="submit" value="Confirm" class="btn btn-primary" />
