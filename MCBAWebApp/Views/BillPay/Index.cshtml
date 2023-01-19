@@ -1,0 +1,32 @@
+@using MCBADataLibrary.Models;
+@model IEnumerable<BillPay>
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div>
+    <h3>Your Bills</h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.BillPayID)</th>
+            <th>@Html.DisplayNameFor(x => x.AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x.Amount)</th>
+            <th>@Html.DisplayNameFor(x => x.ScheduleTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x => x.Period)</th>
+            <th></th>
+        </tr>
+        @foreach (var bill in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => bill.BillPayID)</td>
+                <td>@Html.DisplayFor(x => bill.AccountNumber)</td>
+                <td>@Html.DisplayFor(x => bill.Amount)</td>
+                <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+                <td>@Html.DisplayFor(x => bill.Period)</td>
+                <td><a asp-action="Index" class="btn btn-danger">Cancel</a></td>
+            </tr>
+
+        }
+    </table>
+    <a asp-action="NewBill" class="btn btn-primary my-3 mx-auto d-block">New Bill</a>
+</div>

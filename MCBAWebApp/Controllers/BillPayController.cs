@@ -25,4 +25,9 @@ public class BillPayController : Controller
 
         return View(bills);
     }
+
+    public async Task<IActionResult> NewBill() 
+    {
+        
+    }
 }
