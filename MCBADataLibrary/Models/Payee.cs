@@ -1,4 +1,5 @@
 ﻿using MCBADataLibrary.Enums;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ public class Payee
     public int PayeeID { get; set; }
 
     [Required, MaxLength(50)]
+    [DisplayName("Payee")]
     public required string Name { get; set; }
 
     [Required, MaxLength(50)]
@@ -26,4 +28,6 @@ public class Payee
     [Required, StringLength(14, MinimumLength = 14)]
     [RegularExpression(@"\(0\d\)(\s\d{4}){2}")]
     public required string Phone { get; set; }
+
+    public List<BillPay> BillPays { get; set; } = new List<BillPay>();
 }

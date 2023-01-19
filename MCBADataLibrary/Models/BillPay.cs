@@ -29,5 +29,7 @@ public class BillPay
     [DisplayName("Scheduled Time")]
     public DateTime ScheduleTimeUtc { get; set; }
 
+    public BillStatus BillStatus { get; set; } = BillStatus.OnTime;
+
     public BillPeriod Period { get; set; }
 }

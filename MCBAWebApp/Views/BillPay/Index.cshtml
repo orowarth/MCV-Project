@@ -9,6 +9,7 @@
     <table class="table">
         <tr>
             <th>@Html.DisplayNameFor(x => x.BillPayID)</th>
+            <th>@Html.DisplayNameFor(x => x.Payee.Name)</th>
             <th>@Html.DisplayNameFor(x => x.AccountNumber)</th>
             <th>@Html.DisplayNameFor(x => x.Amount)</th>
             <th>@Html.DisplayNameFor(x => x.ScheduleTimeUtc)</th>
@@ -19,6 +20,7 @@
         {
             <tr>
                 <td>@Html.DisplayFor(x => bill.BillPayID)</td>
+                <td>@Html.DisplayFor(x => bill.Payee.Name)</td>
                 <td>@Html.DisplayFor(x => bill.AccountNumber)</td>
                 <td>@Html.DisplayFor(x => bill.Amount)</td>
                 <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>

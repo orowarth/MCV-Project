@@ -23,6 +23,8 @@ public class BillPayController : Controller
     {
         var bills = await _context.BillPayments
             .Where(b => b.Account.CustomerID == CustomerID)
+            .Include(b => b.Payee)
+            .OrderBy(b => b.ScheduleTimeUtc)
             .ToListAsync();
 
         return View(bills);

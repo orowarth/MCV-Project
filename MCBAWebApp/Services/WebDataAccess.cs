@@ -1,4 +1,5 @@
 ﻿using MCBADataLibrary.Data;
+using MCBADataLibrary.Enums;
 using MCBADataLibrary.Models;
 using MCBAWebApp.Converters;
 using System.Text.Json;
@@ -40,6 +41,53 @@ public class WebDataAccess
         }
 
         await context.AddRangeAsync(customers);
+        await context.AddRangeAsync(GetSeedPayees());
         await context.SaveChangesAsync();
+    }
+
+    public static ICollection<Payee> GetSeedPayees()
+    {
+        return new List<Payee>()
+        {
+            new Payee
+            {
+                Name = "Telco Co.",
+                Address = "1 City Street",
+                City = "Melbourne",
+                PostCode= "3000",
+                Phone = "(04) 0000 0000",
+                State = State.VIC
+            },
+
+            new Payee
+            {
+                Name = "Insurance Company",
+                Address = "33 Business Road",
+                City = "Sydney",
+                PostCode = "2000",
+                Phone = "(04) 2222 2222",
+                State = State.NSW
+            },
+
+            new Payee
+            {
+                Name = "Leaky Loans",
+                Address = "27 Beach Lane",
+                City = "Perth",
+                PostCode = "6000",
+                Phone = "(04) 1212 3434",
+                State = State.WA
+            },
+
+            new Payee
+            {
+                Name = "Useless Utilities",
+                Address = "277 Bridge Street",
+                City = "Hobart",
+                PostCode = "4000",
+                Phone = "(04) 8765 4432",
+                State = State.QLD
+            },
+        };
     }
 }

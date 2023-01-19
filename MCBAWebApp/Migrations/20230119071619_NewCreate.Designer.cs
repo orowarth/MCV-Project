@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCBAWebApp.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20230116073431_NewMigration")]
-    partial class NewMigration
+    [Migration("20230119071619_NewCreate")]
+    partial class NewCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,9 @@ namespace MCBAWebApp.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
+
+                    b.Property<int>("BillStatus")
+                        .HasColumnType("int");
 
                     b.Property<int>("PayeeID")
                         .HasColumnType("int");
@@ -238,7 +241,7 @@ namespace MCBAWebApp.Migrations
                         .IsRequired();
 
                     b.HasOne("MCBADataLibrary.Models.Payee", "Payee")
-                        .WithMany()
+                        .WithMany("BillPays")
                         .HasForeignKey("PayeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -287,6 +290,11 @@ namespace MCBAWebApp.Migrations
 
                     b.Navigation("Login")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MCBADataLibrary.Models.Payee", b =>
+                {
+                    b.Navigation("BillPays");
                 });
 #pragma warning restore 612, 618
         }
