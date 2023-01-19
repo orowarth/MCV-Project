@@ -1,7 +1,7 @@
 @using MCBADataLibrary.Models;
 @model IEnumerable<BillPay>
 @{
-    ViewData["Title"] = "Accounts";
+    ViewData["Title"] = "Bills";
 }
 
 <div>
@@ -23,10 +23,12 @@
                 <td>@Html.DisplayFor(x => bill.Amount)</td>
                 <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
                 <td>@Html.DisplayFor(x => bill.Period)</td>
-                <td><a asp-action="Index" class="btn btn-danger">Cancel</a></td>
+                <td><a asp-action="CancelBill" asp-route-id="@bill.BillPayID" class="btn btn-danger">Cancel</a></td>
             </tr>
 
         }
     </table>
+    <div class="d-flex justify-content-center">
     <a asp-action="NewBill" class="btn btn-primary my-3 mx-auto d-block">New Bill</a>
+    </div>
 </div>
