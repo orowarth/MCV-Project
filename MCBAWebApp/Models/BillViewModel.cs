@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MCBADataLibrary.Enums;
-using System.ComponentModel.DataAnnotations;
 using MCBAWebApp.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 namespace MCBAWebApp.Models;
 
 public class BillViewModel
