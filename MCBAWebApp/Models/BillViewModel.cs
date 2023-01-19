@@ -17,6 +17,7 @@ public class BillViewModel
 
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
     [DataType(DataType.DateTime)]
+    [FutureTime(ErrorMessage = "Scheduled time cannot be in the past.")]
     public DateTime ScheduleTime { get; set; }
 
     public BillPeriod Period { get; set; }

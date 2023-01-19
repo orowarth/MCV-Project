@@ -79,12 +79,6 @@ public class BillPayController : Controller
             return View(viewModel);
         }
 
-        if (viewModel.ScheduleTime <= DateTime.Now)
-        {
-            ModelState.AddModelError(nameof(viewModel.ScheduleTime), "Scheduled time cannot be in the past.");
-            return View(viewModel);
-        }
-
         await _context.BillPayments.AddAsync(new BillPay
         {
             AccountNumber = viewModel.SelectedAccount,
