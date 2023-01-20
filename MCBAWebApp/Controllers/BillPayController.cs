@@ -1,5 +1,6 @@
-using MCBADataLibrary.Models;
 using MCBADataLibrary.Data;
+using MCBADataLibrary.Enums;
+using MCBADataLibrary.Models;
 using MCBAWebApp.Filters;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,7 @@ public class BillPayController : Controller
             Accounts = customerAccounts.Select(a => new SelectListItem
             {
                 Value = a.AccountNumber.ToString(),
-                Text = $"{a.AccountNumber}: {a.AccountType}"
+                Text = $"{a.AccountNumber}: {a.AccountType}, Available Balance: {a.Balance - a.MinimumBalance, 0:C2}"
             }),
             Payees = payees.Select(p => new SelectListItem
             {
@@ -68,7 +69,7 @@ public class BillPayController : Controller
                 .Select(a => new SelectListItem
                 {
                     Value = a.AccountNumber.ToString(),
-                    Text = $"{a.AccountNumber}: {a.AccountType}"
+                    Text = $"{a.AccountNumber}: {a.AccountType}, Available Balance: {a.Balance - a.MinimumBalance, 0:C2}"
                 });
         viewModel.Payees = _context.Payees.Select(p => new SelectListItem
         {
@@ -89,6 +90,23 @@ public class BillPayController : Controller
             ScheduleTimeUtc = viewModel.ScheduleTime.ToUniversalTime(),
             Period = viewModel.Period
         });
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> RetryBill(int id)
+    {
+        var bill = await _context.BillPayments
+            .Include(b => b.Account)
+            .FirstAsync(b => b.BillPayID == id);
+        bill.Account.ProcessBill(bill);
+
+        if (bill.BillStatus == BillStatus.Complete)
+        {
+            _context.BillPayments.Remove(bill);
+        }
 
         await _context.SaveChangesAsync();
 

@@ -1,3 +1,4 @@
+@using MCBADataLibrary.Enums;
 @using MCBADataLibrary.Models;
 @model IEnumerable<BillPay>
 @{
@@ -12,6 +13,7 @@
             <th>@Html.DisplayNameFor(x => x.Payee.Name)</th>
             <th>@Html.DisplayNameFor(x => x.AccountNumber)</th>
             <th>@Html.DisplayNameFor(x => x.Amount)</th>
+            <th>Status</th>
             <th>@Html.DisplayNameFor(x => x.ScheduleTimeUtc)</th>
             <th>@Html.DisplayNameFor(x => x.Period)</th>
             <th></th>
@@ -23,9 +25,16 @@
                 <td>@Html.DisplayFor(x => bill.Payee.Name)</td>
                 <td>@Html.DisplayFor(x => bill.AccountNumber)</td>
                 <td>@Html.DisplayFor(x => bill.Amount)</td>
+                <td>@Html.DisplayFor(x => bill.BillStatus)</td>
                 <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
                 <td>@Html.DisplayFor(x => bill.Period)</td>
-                <td><a asp-action="CancelBill" asp-route-id="@bill.BillPayID" class="btn btn-danger">Cancel</a></td>
+                <td>
+                    @if (bill.BillStatus == BillStatus.Late)
+                    {
+                        <a asp-action="RetryBill" asp-route-id="@bill.BillPayID" class="btn btn-warning">Retry</a>
+                    }
+                    <a asp-action="CancelBill" asp-route-id="@bill.BillPayID" class="btn btn-danger">Cancel</a>
+                </td>
             </tr>
 
         }
