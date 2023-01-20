@@ -43,6 +43,37 @@ public class Account
     [InverseProperty("Account")]
     public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
+    [InverseProperty("Account")]
+    public List<BillPay> Bills { get; set; } = new List<BillPay>();
+
+    public void ProcessBill(BillPay bill)
+    {
+        if ((Balance - MinimumBalance) < bill.Amount)
+        {
+            bill.BillStatus = BillStatus.Late;
+            return;
+        }
+
+        Balance -= bill.Amount;
+        Transactions.Add(new Transaction
+        {
+            Amount = bill.Amount,
+            TransactionType = TransactionType.BillPay,
+            Comment = null,
+            TransactionTimeUtc = DateTime.UtcNow,
+            DestinationAccountNumber = null,
+        });
+
+        if (bill.Period == BillPeriod.Monthly)
+        {
+            bill.ScheduleTimeUtc = bill.ScheduleTimeUtc.AddMonths(1);
+        }
+        else
+        {
+            bill.BillStatus = BillStatus.Complete;
+        }
+    }
+
     public void AddDeposit(decimal amount, string? comment)
     {
         Transactions.Add(new Transaction
