@@ -7,7 +7,7 @@ namespace MCBAWebApp.Services;
 public class BillPayService : BackgroundService
 {
     private readonly IServiceProvider _services;
-    public BillPayService(IServiceProvider services) 
+    public BillPayService(IServiceProvider services)
     {
         _services = services;
     }
@@ -23,22 +23,22 @@ public class BillPayService : BackgroundService
 
     private async Task PayBills(CancellationToken cancellationToken)
     {
-        // Pay some bills...
         using var scope = _services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<BankDbContext>();
 
         var accountsWithBillsDue = await context.Accounts
-        .Where(a => a.Bills.Any())
-        .Include(a => a.Bills.Where(b => b.ScheduleTimeUtc <= DateTime.UtcNow)).ToListAsync();
+            .Where(a => a.Bills.Any())
+            .Include(a => a.Bills.Where(b => b.ScheduleTimeUtc <= DateTime.UtcNow))
+            .ToListAsync(cancellationToken);
 
-        var finishedBills = new List<BillPay>();
-        
         foreach (var account in accountsWithBillsDue)
         {
-            foreach (var bill in account.Bills) 
+            foreach (var bill in account.Bills)
             {
-                // Bill payment logic + new transaction + updated balance + update bill if monthly
+                account.ProcessBill(bill);
             }
+            account.Bills.RemoveAll(b => b.BillStatus == BillStatus.Complete);
         }
+        await context.SaveChangesAsync(cancellationToken);
     }
 }
