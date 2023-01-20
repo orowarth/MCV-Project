@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCBAWebApp.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20230119071619_NewCreate")]
-    partial class NewCreate
+    [Migration("20230120005805_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,7 +235,7 @@ namespace MCBAWebApp.Migrations
             modelBuilder.Entity("MCBADataLibrary.Models.BillPay", b =>
                 {
                     b.HasOne("MCBADataLibrary.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Bills")
                         .HasForeignKey("AccountNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -281,6 +281,8 @@ namespace MCBAWebApp.Migrations
 
             modelBuilder.Entity("MCBADataLibrary.Models.Account", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("Transactions");
                 });
 

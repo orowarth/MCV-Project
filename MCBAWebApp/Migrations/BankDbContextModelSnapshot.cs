@@ -232,7 +232,7 @@ namespace MCBAWebApp.Migrations
             modelBuilder.Entity("MCBADataLibrary.Models.BillPay", b =>
                 {
                     b.HasOne("MCBADataLibrary.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Bills")
                         .HasForeignKey("AccountNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -278,6 +278,8 @@ namespace MCBAWebApp.Migrations
 
             modelBuilder.Entity("MCBADataLibrary.Models.Account", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("Transactions");
                 });
 

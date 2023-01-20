@@ -43,6 +43,9 @@ public class Account
     [InverseProperty("Account")]
     public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
+    [InverseProperty("Account")]
+    public List<BillPay> Bills { get; set; } = new List<BillPay>();
+
     public void AddDeposit(decimal amount, string? comment)
     {
         Transactions.Add(new Transaction
