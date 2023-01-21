@@ -1,3 +1,4 @@
+using MCBAAdminAPI.Data;
 using MCBADataLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<BankDbContext>(options =>
         builder.Configuration.GetConnectionString("BankContext"),
         builder => builder.MigrationsAssembly("MCBAWebApp"));
 });
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
