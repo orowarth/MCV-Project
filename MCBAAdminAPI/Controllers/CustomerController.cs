@@ -52,18 +52,18 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Updates a <c>Customer</c> object based on an <c>UpdatedCustomer</c>
     /// </summary>
-    /// <param name="customer"></param>
+    /// <param name="updateCustomer"></param>
     /// <returns>IActionResult</returns>
     [HttpPut("UpdateCustomer")]
-    public async Task<IActionResult> UpdateCustomer(UpdatedCustomer customer)
+    public async Task<IActionResult> UpdateCustomer(UpdatedCustomer updateCustomer)
     {
-        var retrievedCustomer = await _customerRepository.GetById(customer.CustomerID);
+        var retrievedCustomer = await _customerRepository.GetById(updateCustomer.CustomerID);
 
         if (retrievedCustomer is null)
         {
             return NotFound();
         }
-        await _customerRepository.UpdateCustomer(customer);
+        await _customerRepository.UpdateCustomer(updateCustomer);
         return Ok();
     }
 
