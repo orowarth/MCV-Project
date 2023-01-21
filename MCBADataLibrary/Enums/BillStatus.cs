@@ -9,4 +9,6 @@ public enum BillStatus
     [Display(Name = "Overdue")]
     Late = 2,
     Complete = 3,
+
+    Blocked = 4,
 }
