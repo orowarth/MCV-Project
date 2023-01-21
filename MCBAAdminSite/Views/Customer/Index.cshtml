@@ -1,0 +1,44 @@
+﻿@using MCBADataLibrary.Enums
+@using MCBADataLibrary.Models
+@model IEnumerable<Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div>
+    <h3>Customers</h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.CustomerID)</th>
+            <th>@Html.DisplayNameFor(x => x.Name)</th>
+            <th>@Html.DisplayNameFor(x => x.Address)</th>
+            <th>@Html.DisplayNameFor(x => x.Mobile)</th>
+            <th>@Html.DisplayNameFor(x => x.CustomerStatus)</th>
+            <th></th>
+        </tr>
+        @foreach (var customer in Model)
+        {
+            var isBlocked = (customer.CustomerStatus == CustomerStatus.Blocked);
+            <tr>
+                <td>@Html.DisplayFor(x => customer.CustomerID)</td>
+                <td>@Html.DisplayFor(x => customer.Name)</td>
+                <td>@Html.DisplayFor(x => customer.Address)</td>
+                <td>@Html.DisplayFor(x => customer.Mobile)</td>
+                <td>@Html.DisplayFor(x => customer.CustomerStatus)</td>
+                <td>
+                    @if (isBlocked)
+                    {
+                        <a class="btn btn-primary" asp-action="UnblockCustomer" asp-route-id="@customer.CustomerID">Unblock</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger" asp-action="BlockCustomer" asp-route-id="@customer.CustomerID">Block</a>
+                    }
+                    <a class="btn btn-primary" asp-action="UpdateCustomer" asp-route-id="@customer.CustomerID">Modify</a>
+                    <a class="btn btn-primary" asp-controller="BillPay" asp-action="Index" asp-route-id="@customer.CustomerID">View Bills</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

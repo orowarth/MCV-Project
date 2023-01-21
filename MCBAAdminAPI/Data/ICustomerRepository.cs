@@ -10,5 +10,4 @@ public interface ICustomerRepository
     public Task UpdateCustomer(UpdatedCustomer customer);
     public Task BlockCustomer(int id);
     public Task UnblockCustomer(int id);
-
 }
