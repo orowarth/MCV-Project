@@ -36,7 +36,14 @@ namespace MCBAAdminSite.Controllers
                 return View();
             }
 
+            HttpContext.Session.SetInt32("Admin", 1);
             return RedirectToAction("Index", "Customer");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
