@@ -33,5 +33,5 @@ public class Customer
 
     public Login Login { get; set; } = null!;
 
-    public List<Account> Accounts { get; set; }
+    public List<Account> Accounts { get; set; } = new List<Account>();
 }
