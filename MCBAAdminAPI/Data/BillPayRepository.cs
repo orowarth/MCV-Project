@@ -25,11 +25,13 @@ public class BillPayRepository : IBillPayRepository
     {
         var billToBlock = await _context.BillPayments.FindAsync(id);
         billToBlock.BillStatus = BillStatus.Blocked;
+        await _context.SaveChangesAsync();
     }
 
     public async Task UnblockBill(int id)
     {
         var billToBlock = await _context.BillPayments.FindAsync(id);
         billToBlock.BillStatus = BillStatus.OnTime;
+        await _context.SaveChangesAsync();
     }
 }
