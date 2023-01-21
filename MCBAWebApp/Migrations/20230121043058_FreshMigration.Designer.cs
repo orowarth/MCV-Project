@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCBAWebApp.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20230120005805_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230121043058_FreshMigration")]
+    partial class FreshMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,9 @@ namespace MCBAWebApp.Migrations
                     b.Property<string>("City")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<int>("CustomerStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Mobile")
                         .HasMaxLength(12)
