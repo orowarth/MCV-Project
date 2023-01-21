@@ -18,6 +18,7 @@ public class AdminController : ControllerBase
         {
             return Ok();
         }
+
         return Unauthorized();
     }
 }
