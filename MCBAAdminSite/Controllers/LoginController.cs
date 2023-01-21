@@ -23,9 +23,7 @@ namespace MCBAAdminSite.Controllers
         public async Task<IActionResult> Login(LoginInput loginInput)
         {
             var httpClient = _httpClientFactory.CreateClient("Admin");
-            var jsonData = JsonSerializer.Serialize(loginInput);
-            var httpData = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("Admin/Login", httpData);
+            var response = await httpClient.PostAsJsonAsync("Admin/Login", loginInput);
 
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
@@ -38,7 +36,7 @@ namespace MCBAAdminSite.Controllers
                 return View();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Customer");
         }
     }
 }
