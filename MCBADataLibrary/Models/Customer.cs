@@ -31,6 +31,8 @@ public class Customer
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
 
+    public CustomerStatus CustomerStatus { get; set; } = CustomerStatus.Unblocked;
+
     public Login Login { get; set; } = null!;
 
     public List<Account> Accounts { get; set; } = new List<Account>();
