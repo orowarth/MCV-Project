@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MCBAWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FreshMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,8 @@ namespace MCBAWebApp.Migrations
                     City = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     State = table.Column<int>(type: "int", nullable: true),
                     PostCode = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: true),
-                    Mobile = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true)
+                    Mobile = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    CustomerStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

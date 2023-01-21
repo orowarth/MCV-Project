@@ -28,10 +28,11 @@
                 <td>@Html.DisplayFor(x => bill.BillStatus)</td>
                 <td>@bill.ScheduleTimeUtc.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
                 <td>@Html.DisplayFor(x => bill.Period)</td>
+                @{ var isBlocked = (bill.BillStatus == BillStatus.Blocked);}
                 <td>
                     @if (bill.BillStatus == BillStatus.Late)
                     {
-                        <a asp-action="RetryBill" asp-route-id="@bill.BillPayID" class="btn btn-warning">Retry</a>
+                        <a asp-action="RetryBill" asp-route-id="@bill.BillPayID" class="btn btn-warning @(isBlocked  ? "disabled" : "")">Retry</a>
                     }
                     <a asp-action="CancelBill" asp-route-id="@bill.BillPayID" class="btn btn-danger">Cancel</a>
                 </td>

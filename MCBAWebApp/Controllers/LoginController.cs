@@ -1,4 +1,5 @@
 using MCBADataLibrary.Data;
+using MCBADataLibrary.Enums;
 using MCBADataLibrary.Models;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,12 @@ public class LoginController : Controller
         if (login is null || !simpleHash.Verify(loginViewData.Password, login.PasswordHash))
         {
             ModelState.AddModelError("LoginFailure", "Login ID and/or password were incorrect.");
+            return View();
+        }
+
+        if (login.Customer.CustomerStatus == CustomerStatus.Blocked)
+        {
+            ModelState.AddModelError("LoginFailure", "Your account has been blocked, please contact MCBA administrators.");
             return View();
         }
 

@@ -1,14 +1,12 @@
-﻿using MCBADataLibrary.Enums;
+using MCBADataLibrary.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MCBADataLibrary.Models;
+namespace MCBADataLibrary.Admin.Communication;
 
-public class Customer
+public class UpdatedCustomer
 {
     // Keeps the ID length to 4 digits
     [Range(1000, 9999)]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int CustomerID { get; set; }
 
     [Required, MaxLength(50)]
@@ -25,15 +23,11 @@ public class Customer
     public State? State { get; set; }
 
     [StringLength(maximumLength: 4, MinimumLength = 4)]
-    public string? PostCode { get; set;}
-    
+    public string? PostCode { get; set; }
+
     [StringLength(maximumLength: 12, MinimumLength = 12)]
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
 
-    public CustomerStatus CustomerStatus { get; set; } = CustomerStatus.Unblocked;
-
-    public Login Login { get; set; } = null!;
-
-    public List<Account> Accounts { get; set; } = new List<Account>();
+    public CustomerStatus CustomerStatus { get; set; }
 }

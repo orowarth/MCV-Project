@@ -94,6 +94,9 @@ namespace MCBAWebApp.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<int>("CustomerStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("Mobile")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
