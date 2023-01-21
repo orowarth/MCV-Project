@@ -31,4 +31,5 @@ public class CustomerDto
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
 
+    public CustomerStatus CustomerStatus { get; set; }
 }
