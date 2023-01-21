@@ -1,11 +1,9 @@
 using MCBADataLibrary.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MCBAAdminAPI.Communication;
+namespace MCBADataLibrary.Admin.Communication;
 
-public class CustomerDto
+public class UpdatedCustomer
 {
     // Keeps the ID length to 4 digits
     [Range(1000, 9999)]
@@ -25,8 +23,8 @@ public class CustomerDto
     public State? State { get; set; }
 
     [StringLength(maximumLength: 4, MinimumLength = 4)]
-    public string? PostCode { get; set;}
-    
+    public string? PostCode { get; set; }
+
     [StringLength(maximumLength: 12, MinimumLength = 12)]
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }

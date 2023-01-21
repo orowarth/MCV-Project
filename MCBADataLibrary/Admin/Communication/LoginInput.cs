@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MCBAAdminAPI.Communication;
-public class LoginDto
+namespace MCBADataLibrary.Admin.Communication;
+public class LoginInput
 {
     [Required]
     public required string LoginID { get; set; }

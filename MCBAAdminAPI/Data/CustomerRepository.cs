@@ -1,7 +1,7 @@
-﻿using MCBADataLibrary.Data;
+﻿using MCBADataLibrary.Admin.Communication;
+using MCBADataLibrary.Data;
 using MCBADataLibrary.Enums;
 using MCBADataLibrary.Models;
-using MCBAAdminAPI.Communication;
 using Microsoft.EntityFrameworkCore;
 
 namespace MCBAAdminAPI.Data;
@@ -25,10 +25,10 @@ public class CustomerRepository : ICustomerRepository
         return await _context.Customers.FindAsync(id);
     }
 
-    public async Task UpdateCustomer(CustomerDto customer)
+    public async Task UpdateCustomer(UpdatedCustomer customer)
     {
         var retrievedCustomer = await _context.Customers.FindAsync(customer.CustomerID)!;
-        retrievedCustomer.Name = customer.Name;
+        retrievedCustomer!.Name = customer.Name;
         retrievedCustomer.TFN = customer.TFN;
         retrievedCustomer.Address = customer.Address;
         retrievedCustomer.City = customer.City;
@@ -38,17 +38,17 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task BlockCustomer(int id) 
+    public async Task BlockCustomer(int id)
     {
         var customer = await _context.Customers.FindAsync(id)!;
-        customer.CustomerStatus = CustomerStatus.Blocked;
+        customer!.CustomerStatus = CustomerStatus.Blocked;
         await _context.SaveChangesAsync();
     }
 
-    public async Task UnblockCustomer(int id) 
+    public async Task UnblockCustomer(int id)
     {
         var customer = await _context.Customers.FindAsync(id)!;
-        customer.CustomerStatus = CustomerStatus.Blocked;
+        customer!.CustomerStatus = CustomerStatus.Unblocked;
         await _context.SaveChangesAsync();
     }
 }

@@ -9,8 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BankDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("BankContext"),
-        builder => builder.MigrationsAssembly("MCBAWebApp"));
+        builder.Configuration.GetConnectionString("BankContext"));
 });
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();

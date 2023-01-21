@@ -1,10 +1,14 @@
 using MCBAAdminAPI.Data;
-using MCBAAdminAPI.Communication;
-using MCBADataLibrary.Models;
+using MCBADataLibrary.Admin.Communication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MCBAAdminAPI.Controllers;
 
+/// <summary>
+/// <c>CustomerController</c> handles admin requests related to customers,
+/// in particular, it handles the blocking and unblocking of customers.
+/// It aditionally allows administrators to view a list of all <c>Customer</c> objects.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class CustomerController : ControllerBase
@@ -16,6 +20,10 @@ public class CustomerController : ControllerBase
         _customerRepository = customerRepository;
     }
 
+    /// <summary>
+    /// Retrieves all <c>Customer</c> objects from a <c>CustomerRepository</c>
+    /// </summary>
+    /// <returns>IActionResult</returns>
     [HttpGet("GetAllCustomers")]
     public async Task<IActionResult> GetAllCustomers()
     {
@@ -23,6 +31,11 @@ public class CustomerController : ControllerBase
         return Ok(allCustomers);
     }
 
+    /// <summary>
+    /// Retrieves a <c>Customer</c> from a <c>CustomerRepository</c> based on a <c>Customer</c> identifier
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>IActionResult</returns>
     [HttpGet("GetCustomerById/{id}")]
     public async Task<IActionResult> GetCustomerById(int id)
     {
@@ -32,12 +45,17 @@ public class CustomerController : ControllerBase
         {
             return NotFound();
         }
-
         return Ok(customer);
     }
 
+
+    /// <summary>
+    /// Updates a <c>Customer</c> object based on an <c>UpdatedCustomer</c>
+    /// </summary>
+    /// <param name="customer"></param>
+    /// <returns>IActionResult</returns>
     [HttpPut("UpdateCustomer")]
-    public async Task<IActionResult> UpdateCustomer(CustomerDto customer)
+    public async Task<IActionResult> UpdateCustomer(UpdatedCustomer customer)
     {
         var retrievedCustomer = await _customerRepository.GetById(customer.CustomerID);
 
@@ -49,6 +67,11 @@ public class CustomerController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Blocks a <c>Customer</c> based on a <c>Customer</c> identifier
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>IActionResult</returns>
     [HttpPut("BlockCustomer/{id}")]
     public async Task<IActionResult> BlockCustomer(int id)
     {
@@ -58,11 +81,16 @@ public class CustomerController : ControllerBase
         {
             return NotFound();
         }
-        
-        await _customerRepository.BlockCustomer(id);
 
+        await _customerRepository.BlockCustomer(id);
         return Ok();
     }
+
+    /// <summary>
+    /// Unblocks a <c>Customer</c> based on a <c>Customer</c> identifier
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>IActionResult</returns>
     [HttpPut("UnblockCustomer/{id}")]
     public async Task<IActionResult> UnblockCustomer(int id)
     {
@@ -72,9 +100,8 @@ public class CustomerController : ControllerBase
         {
             return NotFound();
         }
-        
-        await _customerRepository.UnblockCustomer(id);
 
+        await _customerRepository.UnblockCustomer(id);
         return Ok();
     }
 }
