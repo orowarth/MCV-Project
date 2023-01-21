@@ -30,4 +30,5 @@ public class CustomerDto
     [StringLength(maximumLength: 12, MinimumLength = 12)]
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
+
 }
