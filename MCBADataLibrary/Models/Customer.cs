@@ -1,4 +1,5 @@
 ﻿using MCBADataLibrary.Enums;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,6 +10,7 @@ public class Customer
     // Keeps the ID length to 4 digits
     [Range(1000, 9999)]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [DisplayName("ID")]
     public int CustomerID { get; set; }
 
     [Required, MaxLength(50)]
@@ -31,6 +33,7 @@ public class Customer
     [RegularExpression(@"04\d{2}(\s\d{3}){2}")]
     public string? Mobile { get; set; }
 
+    [DisplayName("Status")]
     public CustomerStatus CustomerStatus { get; set; } = CustomerStatus.Unblocked;
 
     public Login Login { get; set; } = null!;

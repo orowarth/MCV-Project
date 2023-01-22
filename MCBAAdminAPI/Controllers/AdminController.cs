@@ -12,12 +12,13 @@ namespace MCBAAdminAPI.Controllers;
 public class AdminController : ControllerBase
 {
     [HttpPost("Login")]
-    public IActionResult Login(LoginInput loginDto)
+    public IActionResult Login(LoginInput loginInput)
     {
-        if (loginDto.LoginID == "admin" && loginDto.Password == "admin")
+        if (loginInput.LoginID == "admin" && loginInput.Password == "admin")
         {
             return Ok();
         }
+
         return Unauthorized();
     }
 }

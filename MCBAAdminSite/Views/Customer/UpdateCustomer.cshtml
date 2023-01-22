@@ -1,0 +1,60 @@
+﻿@using MCBADataLibrary.Admin.Communication
+@using MCBADataLibrary.Enums;
+@model UpdatedCustomer
+@{
+    ViewData["Title"] = "Update customer";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateCustomer">
+            <input asp-for="CustomerID" hidden />
+            <div class="form-group my-2">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="TFN" class="control-label"></label>
+                <input asp-for="TFN" class="form-control" />
+                <span asp-validation-for="TFN" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="State" class="control-label"></label>
+                <select asp-for="State" asp-items="Html.GetEnumSelectList<State>()" class="form-control"></select>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="PostCode" class="control-label"></label>
+                <input asp-for="PostCode" class="form-control" />
+                <span asp-validation-for="PostCode" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <a asp-action="Index" class="btn btn-danger">Cancel</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
