@@ -9,6 +9,7 @@ public class BankDbContext : DbContext
     { }
 
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerImage> CustomerImages { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Login> Logins { get; set; }
     public DbSet<Transaction> Transactions { get; set; }

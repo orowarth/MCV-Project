@@ -38,5 +38,7 @@ public class Customer
 
     public Login Login { get; set; } = null!;
 
+    public CustomerImage? Image { get; set; }
+
     public List<Account> Accounts { get; set; } = new List<Account>();
 }
