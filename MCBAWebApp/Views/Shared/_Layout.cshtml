@@ -26,14 +26,14 @@
                     }
 
                     <ul class="navbar-nav d-lg-flex align-items-center ml-auto">
-                        
+
                         @if (isLoggedIn)
                         {
-                            <li class="nav-item">
-                                <span class="nav-link text-dark">
-                                    Welcome, @Context.Session.GetString(nameof(Customer.Name))
-                                </span>
-                            </li>
+                                <li class="nav-item">
+                                    <span class="nav-link text-dark">
+                                        Welcome, @Context.Session.GetString(nameof(Customer.Name))
+                                    </span>
+                                </li>
                         }
 
                         <li class="nav-item mx-1">
@@ -42,33 +42,39 @@
 
                         @if (isLoggedIn)
                         {
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Customer" asp-action="Index">ATM</a>
-                            </li>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="BillPay" asp-action="Index">My Bills</a>
-                            </li>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Statements" asp-action="Index">My Statements</a>
-                            </li>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Profile" asp-action="Index">My Profile</a>
-                            </li>
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
-                            </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Customer" asp-action="Index">ATM</a>
+                                </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="BillPay" asp-action="Index">My Bills</a>
+                                </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Statements" asp-action="Index">My Statements</a>
+                                </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Profile" asp-action="Index">My Profile</a>
+                                </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                                </li>
                         }
                         else
                         {
-                            <li class="nav-item mx-1">
-                                <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
-                            </li>
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                                </li>
                         }
                         @if (hasImage)
                         {
-                            <li class="nav-item mx-1">
-                                <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" width="65" alt="" class="rounded" />
-                            </li>
+                                <li class="nav-item mx-1">
+                                    <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" width="65" alt="" class="rounded" />
+                                </li>
+                        }
+                        else
+                        {
+                                <li class="nav-item mx-1">
+                                        <img src="@Url.Content("~/DefaultPerson.png")" width="65" alt="" class="rounded" />
+                                </li>
                         }
                     </ul>
                 </div>
