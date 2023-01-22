@@ -122,6 +122,28 @@ namespace MCBAWebApp.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("MCBADataLibrary.Models.CustomerImage", b =>
+                {
+                    b.Property<int>("CustomerImageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerImageID"));
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerImageID");
+
+                    b.HasIndex("CustomerID")
+                        .IsUnique();
+
+                    b.ToTable("CustomerImages");
+                });
+
             modelBuilder.Entity("MCBADataLibrary.Models.Login", b =>
                 {
                     b.Property<string>("LoginID")
@@ -251,6 +273,17 @@ namespace MCBAWebApp.Migrations
                     b.Navigation("Payee");
                 });
 
+            modelBuilder.Entity("MCBADataLibrary.Models.CustomerImage", b =>
+                {
+                    b.HasOne("MCBADataLibrary.Models.Customer", "Customer")
+                        .WithOne("Image")
+                        .HasForeignKey("MCBADataLibrary.Models.CustomerImage", "CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("MCBADataLibrary.Models.Login", b =>
                 {
                     b.HasOne("MCBADataLibrary.Models.Customer", "Customer")
@@ -289,6 +322,8 @@ namespace MCBAWebApp.Migrations
             modelBuilder.Entity("MCBADataLibrary.Models.Customer", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Login")
                         .IsRequired();
