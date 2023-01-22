@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MCBAWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class FreshMigration : Migration
+    public partial class AddedCustomerImages : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +63,26 @@ namespace MCBAWebApp.Migrations
                     table.PrimaryKey("PK_Accounts", x => x.AccountNumber);
                     table.ForeignKey(
                         name: "FK_Accounts_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerImages",
+                columns: table => new
+                {
+                    CustomerImageID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerID = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerImages", x => x.CustomerImageID);
+                    table.ForeignKey(
+                        name: "FK_CustomerImages_Customers_CustomerID",
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
@@ -163,6 +183,12 @@ namespace MCBAWebApp.Migrations
                 column: "PayeeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomerImages_CustomerID",
+                table: "CustomerImages",
+                column: "CustomerID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Logins_CustomerID",
                 table: "Logins",
                 column: "CustomerID",
@@ -184,6 +210,9 @@ namespace MCBAWebApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BillPayments");
+
+            migrationBuilder.DropTable(
+                name: "CustomerImages");
 
             migrationBuilder.DropTable(
                 name: "Logins");

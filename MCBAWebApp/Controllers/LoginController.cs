@@ -22,6 +22,7 @@ public class LoginController : Controller
     {
         var login = await _context.Logins
             .Include(l => l.Customer)
+            .ThenInclude(c => c.Image)
             .FirstOrDefaultAsync(l => l.LoginID == loginViewData.LoginID);
 
         if (!ModelState.IsValid)
@@ -43,6 +44,12 @@ public class LoginController : Controller
 
         HttpContext.Session.SetInt32(nameof(Customer.CustomerID), login.CustomerID);
         HttpContext.Session.SetString(nameof(Customer.Name), login.Customer.Name);
+
+        if (login.Customer.Image is not null && login.Customer.Image.Image is not null)
+        {
+            HttpContext.Session.SetString(nameof(Customer.Image), login.Customer.Image.Image);
+        }
+
         return RedirectToAction("Index", "Customer");
     }
 
