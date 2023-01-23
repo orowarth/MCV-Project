@@ -39,6 +39,9 @@ public class CustomerController : Controller
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
         if (!ModelState.IsValid)
             return View(viewModel);
+        
+        if (!viewModel.Account!.ValidAmount(viewModel.Amount))
+            return View(viewModel);
 
         return View(nameof(ConfirmDeposit), viewModel);
     }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using MCBADataLibrary.Enums;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MCBADataLibrary.Models;
 
@@ -130,11 +131,11 @@ public class Account
             Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
             TransactionTimeUtc = DateTime.UtcNow,
         });
-        Balance += amount;
     }
 
     public void AddFee(decimal fee, string? comment)
     {
+        Balance += fee;
         Transactions.Add(new Transaction
         {
             Amount = fee,
@@ -147,6 +148,9 @@ public class Account
 
     public bool ValidWithdrawal(decimal amount)
     {
+        if (!ValidAmount(amount)) 
+            return false;
+
         var availableBalance = Balance - MinimumBalance;
 
         if (availableBalance < amount)
@@ -159,6 +163,9 @@ public class Account
     }
     public bool ValidTransfer(decimal amount)
     {
+        if (!ValidAmount(amount)) 
+            return false;
+
         var availableBalance = Balance - MinimumBalance;
 
         if (availableBalance < amount)
@@ -168,5 +175,10 @@ public class Account
             return false;
 
         return true;
+    }
+
+    public bool ValidAmount(decimal amount)
+    {
+        return decimal.Round(amount, 2) == amount && amount > 0;
     }
 }
