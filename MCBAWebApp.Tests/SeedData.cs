@@ -27,7 +27,6 @@ public static class SeedData
                     {
                         AccountNumber = 4100,
                         Balance = 100,
-                        CustomerID = 2100,
                         Transactions = new List<Transaction>()
                         {
                             new Transaction()
