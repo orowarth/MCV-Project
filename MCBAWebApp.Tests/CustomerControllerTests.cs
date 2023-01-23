@@ -35,15 +35,11 @@ public class CustomerControllerTests : IDisposable
         var customerController = new CustomerController(_context);
         var sessionMock = new Mock<ISession>();
         var key = nameof(Customer.CustomerID);
-        int fy = 2100;
-        var value = new byte[]
-        {
-            (byte)(fy >> 24),
-            (byte)(0xFF & (fy >> 16)),
-            (byte)(0xFF & (fy >> 8)),
-            (byte)(0xFF & fy)
-        };
-        sessionMock.Setup(_ => _.TryGetValue(key, out value)).Returns(true);
+        var value = BitConverter.GetBytes(2100);
+        if (BitConverter.IsLittleEndian)
+            Array.Reverse(value);
+
+        sessionMock.Setup(s => s.TryGetValue(key, out value)).Returns(true);
 
         customerController.ControllerContext.HttpContext = new DefaultHttpContext()
         {
