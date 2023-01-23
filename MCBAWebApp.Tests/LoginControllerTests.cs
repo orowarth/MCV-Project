@@ -1,5 +1,4 @@
 using MCBADataLibrary.Data;
-using MCBADataLibrary.Models;
 using MCBAWebApp.Controllers;
 using MCBAWebApp.Models;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +16,7 @@ public class LoginControllerTests : IDisposable
     public LoginControllerTests()
     {
         _context = new BankDbContext(new DbContextOptionsBuilder<BankDbContext>().
-            UseInMemoryDatabase(nameof(BankDbContext)).Options);
+            UseInMemoryDatabase("LoginDb").Options);
         SeedData.Initialize(_context);
     }
 
@@ -31,11 +30,14 @@ public class LoginControllerTests : IDisposable
     [Fact]
     public void Login_ReturnsAViewResult()
     {
+        // Arrange
         var loginController = new LoginController(_context);
+        
+        // Act
         var result = loginController.Login();
 
+        // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-
         Assert.NotNull(viewResult);
         Assert.True(viewResult.ViewData.ModelState.IsValid);
     }
@@ -47,23 +49,29 @@ public class LoginControllerTests : IDisposable
     [InlineData("1234", "abc")]
     public async Task Login_ReturnsAViewResult_ModelStateIsInvalid(string loginId, string password)
     {
+        // Arrange
         var loginController = new LoginController(_context);
+
+        // Act
         var result = await loginController.Login(new LoginViewModel
         {
             LoginID = loginId,
             Password = password
         });
 
+        // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-
         Assert.False(viewResult.ViewData.ModelState.IsValid);
     }
 
     [Fact]
     public async Task Login_ReturnsARedirectAction_ValidLogin()
     {
+        // Arrange
         var mockSession = new Mock<ISession>();
         var loginController = new LoginController(_context);
+
+        // Act
         loginController.ControllerContext.HttpContext = new DefaultHttpContext
         {
             Session = mockSession.Object
@@ -75,6 +83,7 @@ public class LoginControllerTests : IDisposable
             Password = "abc123"
         });
 
+        // Assert
         var actionResult = Assert.IsType<RedirectToActionResult>(result);
         Assert.NotNull(actionResult);
         Assert.Equal("Customer", actionResult.ControllerName);
