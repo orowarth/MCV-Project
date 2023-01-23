@@ -11,6 +11,11 @@ namespace MCBAAdminAPI.Controllers;
 [Route("api/[controller]")]
 public class AdminController : ControllerBase
 {
+    /// <summary>
+    /// Logs in an admin given the <c>LoginInput</c> is correct
+    /// </summary>
+    /// <param name="loginInput"></param>
+    /// <returns></returns>
     [HttpPost("Login")]
     public IActionResult Login(LoginInput loginInput)
     {

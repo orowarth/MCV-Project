@@ -30,8 +30,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+/*
+ * This is removed as the 'dotnet run' command does not expose https://localhost:3000,
+ * so there's no real point in using https redirection anyways.
+ * 
+ * app.UseHttpsRedirection();
+ */
 app.UseAuthorization();
 
 app.MapControllers();
