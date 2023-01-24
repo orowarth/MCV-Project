@@ -60,7 +60,7 @@
                             @if (hasImage)
                             {
                                 <li class="nav-item mx-1">
-                                    <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" width="65" alt="" class="rounded" />
+                                    <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" alt="" class="rounded profile-image" />
                                 </li>
                             }
                             else
