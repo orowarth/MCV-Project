@@ -38,7 +38,6 @@ public class LoginControllerTests : IDisposable
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        Assert.NotNull(viewResult);
         Assert.True(viewResult.ViewData.ModelState.IsValid);
     }
 
@@ -71,12 +70,12 @@ public class LoginControllerTests : IDisposable
         var mockSession = new Mock<ISession>();
         var loginController = new LoginController(_context);
 
-        // Act
         loginController.ControllerContext.HttpContext = new DefaultHttpContext
         {
             Session = mockSession.Object
         };
 
+        // Act
         var result = await loginController.Login(new LoginViewModel
         {
             LoginID = "12345678",
@@ -85,7 +84,27 @@ public class LoginControllerTests : IDisposable
 
         // Assert
         var actionResult = Assert.IsType<RedirectToActionResult>(result);
-        Assert.NotNull(actionResult);
         Assert.Equal("Customer", actionResult.ControllerName);
+    }
+
+    [Fact]
+    public void Logout_ReturnsARedirectAction()
+    {
+        //Arrange
+        var mockSession = new Mock<ISession>();
+        var loginController = new LoginController(_context);
+        loginController.ControllerContext.HttpContext = new DefaultHttpContext
+        {
+            Session = mockSession.Object
+        };
+
+        //Act
+        var result = loginController.Logout();
+
+        //Assert 
+        var actionResult = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Home", actionResult.ControllerName);
+        // Assert.IsTrue(mockSession.IsNewSession);
+        // Assert.False(loginController.ControllerContext.HttpContext.Session.Keys.Any());
     }
 }
