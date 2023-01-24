@@ -28,7 +28,7 @@ public class BillPayService : BackgroundService
 
         var accountsWithBillsDue = await context.Accounts
             .Where(a => a.Bills.Any())
-            .Include(a => a.Bills.Where(b => b.ScheduleTimeUtc <= DateTime.UtcNow))
+            .Include(a => a.Bills.Where(b => (b.ScheduleTimeUtc <= DateTime.UtcNow) && (b.BillStatus != BillStatus.Blocked)))
             .ToListAsync(cancellationToken);
 
         foreach (var account in accountsWithBillsDue)
