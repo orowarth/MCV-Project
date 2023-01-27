@@ -65,7 +65,7 @@ public class ProfileController : Controller
             var maxSize = new MagickGeometry(400, 400)
             {
                 IgnoreAspectRatio = false,
-                FillArea = true,
+                FillArea = false,
             };
 
             using var magickImage = new MagickImage(await viewModel.Image.GetBytes());
