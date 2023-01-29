@@ -37,10 +37,14 @@ public class CustomerController : Controller
     public async Task<IActionResult> Deposit(DepositViewModel viewModel)
     {
         viewModel.Account = await _context.Accounts.FindAsync(viewModel.AccountNumber);
-        if (!ModelState.IsValid)
-            return View(viewModel);
-        
+
         if (!viewModel.Account!.ValidAmount(viewModel.Amount))
+        {
+            ModelState.AddModelError(nameof(viewModel.Amount), "Amount must be positive and have no more than two decimal places");
+            return View(viewModel);
+        }
+
+        if (!ModelState.IsValid)
             return View(viewModel);
 
         return View(nameof(ConfirmDeposit), viewModel);
@@ -71,7 +75,13 @@ public class CustomerController : Controller
 
         if (!ModelState.IsValid)
             return View(viewModel);
-        
+
+        if (!viewModel.Account!.ValidAmount(viewModel.Amount))
+        {
+            ModelState.AddModelError(nameof(viewModel.Amount), "Amount must be positive and have no more than two decimal places");
+            return View(viewModel);
+        }
+
         if (!viewModel.Account!.ValidWithdrawal(viewModel.Amount))
         {
             ModelState.AddModelError(nameof(viewModel.Amount), "You cannot withdraw more than your available balance");

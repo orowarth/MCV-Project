@@ -41,10 +41,29 @@ public static class SeedData
                         }
                     },
 
+                    new Account(AccountType.Checking)
+                    {
+                        AccountNumber = 4101,
+                        Balance = 1000,
+                        Transactions = new List<Transaction>()
+                        {
+                            new Transaction
+                            {
+                                TransactionType = TransactionType.Deposit,
+                                AccountNumber = 4101,
+                                DestinationAccountNumber = null,
+                                Amount = 1000,
+                                Comment = "Opening checking",
+                                TransactionTimeUtc = DateTime.UtcNow
+                            }
+                        }
+                    }
+
                 },
                 Login = new Login
                 {
                     LoginID = "12345678",
+                    // abc123 hash using the SimpleHashing.NET package (not included in this project)
                     PasswordHash = "Rfc2898DeriveBytes$50000$MrW2CQoJvjPMlynGLkGFrg==$x8iV0TiDbEXndl0Fg8V3Rw91j5f5nztWK1zu7eQa0EE="
                 }
             },

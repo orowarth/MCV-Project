@@ -32,7 +32,7 @@ public class LoginControllerTests : IDisposable
     {
         // Arrange
         var loginController = new LoginController(_context);
-        
+
         // Act
         var result = loginController.Login();
 

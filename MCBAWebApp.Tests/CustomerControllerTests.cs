@@ -52,7 +52,7 @@ public class CustomerControllerTests : IDisposable
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
         var model = Assert.IsAssignableFrom<Customer>(viewResult.Model);
-        Assert.Single(model.Accounts);
+        Assert.NotEmpty(model.Accounts);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class CustomerControllerTests : IDisposable
     }
 
     [Fact]
-    public async Task DepositPost_WhenValid_ReturnsViewResult()
+    public async Task Deposit_ValidAmount_ReturnsViewResult()
     {
         // Arrange
         var customerController = new CustomerController(_context);
@@ -84,13 +84,14 @@ public class CustomerControllerTests : IDisposable
 
         // Assert
         var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.True(viewModel.ViewData.ModelState.IsValid);
         Assert.Equal("ConfirmDeposit", viewModel.ViewName);
     }
 
     [Theory]
     [InlineData(-1)]
     [InlineData(0.001)]
-    public async Task DepositPost_WhenInvalid_ReturnsInvalidModelState(decimal amount)
+    public async Task Deposit_InvalidAmountFormat_ReturnsInvalidModelState(decimal amount)
     {
         // Arrange
         var customerController = new CustomerController(_context);
@@ -104,6 +105,7 @@ public class CustomerControllerTests : IDisposable
 
         // Assert
         var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.False(viewModel.ViewData.ModelState.IsValid);
         Assert.NotEqual("ConfirmDeposit", viewModel.ViewName);
     }
 
@@ -121,8 +123,11 @@ public class CustomerControllerTests : IDisposable
         Assert.IsAssignableFrom<WithdrawViewModel>(viewModel.Model);
     }
 
-    [Fact]
-    public async Task Withdraw_WhenValid_ReturnsViewResult()
+    [Theory]
+    [InlineData(10, 4100)]
+    [InlineData(100, 4100)]
+    [InlineData(700, 4101)]
+    public async Task Withdraw_ValidAmount_ReturnsViewResult(decimal amount, int accountNumber)
     {
         // Arrange
         var customerController = new CustomerController(_context);
@@ -130,20 +135,20 @@ public class CustomerControllerTests : IDisposable
         // Act
         var result = await customerController.Withdraw(new WithdrawViewModel
         {
-            Amount = 10,
-            AccountNumber = 4100
+            Amount = amount,
+            AccountNumber = accountNumber
         });
 
         // Assert
         var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.True(viewModel.ViewData.ModelState.IsValid);
         Assert.Equal("ConfirmWithdrawal", viewModel.ViewName);
     }
 
     [Theory]
     [InlineData(-1)]
     [InlineData(0.001)]
-    [InlineData(10000)]
-    public async Task Withdraw_WhenInvalid_ReturnsViewResult(decimal amount)
+    public async Task Withdraw_InvalidAmountFormat_ReturnsInvalidModelState(decimal amount)
     {
         // Arrange
         var customerController = new CustomerController(_context);
@@ -157,6 +162,89 @@ public class CustomerControllerTests : IDisposable
 
         // Assert
         var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.False(viewModel.ViewData.ModelState.IsValid);
         Assert.NotEqual("ConfirmWithdrawal", viewModel.ViewName);
+    }
+
+    [Theory]
+    [InlineData(100.01, 4100)]
+    [InlineData(1000.01, 4101)]
+    // Checking accounts can go no lower than $300 as per business rules, so ($1000 - $700.01 = $299.99) should be invalid
+    [InlineData(700.01, 4101)]
+    public async Task Withdraw_AmountMoreThanBalance_ReturnsInvalidModelState(decimal amount, int accountNumber)
+    {
+        // Arrange
+        var customerController = new CustomerController(_context);
+
+        // Act
+        var result = await customerController.Withdraw(new WithdrawViewModel
+        {
+            Amount = amount,
+            AccountNumber = accountNumber
+        });
+
+        // Assert
+        var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.False(viewModel.ViewData.ModelState.IsValid);
+        Assert.NotEqual("ConfirmWithdrawal", viewModel.ViewName);
+    }
+
+    [Fact] 
+    public async Task Transfer_ReturnsViewModel()
+    {
+        // Arrange
+        var customerController = new CustomerController(_context);
+
+        // Act
+        var result = await customerController.Transfer(4100);
+
+        // Assert
+        var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.IsAssignableFrom<TransferViewModel>(viewModel.Model);
+    }
+
+    [Theory]
+    [InlineData(4100, 0)]
+    [InlineData(4100, 1)]
+    [InlineData(4100, 4100)]
+    public async Task Transfer_WhenInvalidDestination_ReturnsInvalidModelState(int senderAccount, int destinationAccountNumber)
+    {
+        // Arrange
+        var customerController = new CustomerController(_context);
+
+        // Act
+        var result = await customerController.Transfer(new TransferViewModel
+        {
+            AccountNumber = senderAccount,
+            DestinationAccount = destinationAccountNumber,
+            Amount = 1
+        });
+
+        // Assert
+        var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.False(viewModel.ViewData.ModelState.IsValid);
+        Assert.NotEqual("ConfirmTransfer", viewModel.ViewName);
+    }
+
+    [Theory]
+    [InlineData(4100, 4101)]
+    [InlineData(4101, 4100)]
+    public async Task Transfer_WhenValidDestination_ReturnsViewResult(int senderAccount, int destinationAccountNumber)
+    {
+        // Arrange
+        var customerController = new CustomerController(_context);
+
+        // Act
+        var result = await customerController.Transfer(new TransferViewModel
+        {
+            AccountNumber = senderAccount,
+            DestinationAccount = destinationAccountNumber,
+            Amount = 1
+        });
+
+        // Assert
+        var viewModel = Assert.IsType<ViewResult>(result);
+        Assert.True(viewModel.ViewData.ModelState.IsValid);
+        Assert.Equal("ConfirmTransfer", viewModel.ViewName);
     }
 }
