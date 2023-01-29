@@ -1,0 +1,24 @@
+﻿@using MCBADataLibrary.Models;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center my-5">
+    @{
+        var isLoggedIn = Context.Session.GetInt32("Admin").HasValue;
+    }
+
+    @if (isLoggedIn)
+    {
+        <h1 class="display-6 my-3">Welcome to the MCBA Admin Portal</h1>
+        <p>Here you can perform administrative tasks such as blocking customers, modifying customer details, and blocking/unblocking scheduled bills.</p>
+    }
+    else
+    {
+        <h1 class="display-6 my-5">Most Common Bank of Australia Admin Portal</h1>
+        <p>
+            <a asp-action="Login" asp-controller="Login" class="btn btn-lg btn-primary">Login</a>
+        </p>
+    }
+
+</div>

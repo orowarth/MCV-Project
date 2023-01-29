@@ -1,0 +1,43 @@
+﻿@using MCBADataLibrary.Enums;
+@using MCBADataLibrary.Models
+@model BillViewModel
+@{
+    ViewData["Title"] = "Customer bills";
+}
+
+<div>
+    <h3>Customers</h3>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.Bills[0].BillPayID)</th>
+            <th>@Html.DisplayNameFor(x => x.Bills[0].Amount)</th>
+            <th>@Html.DisplayNameFor(x => x.Bills[0].AccountNumber)</th>
+            <th>@Html.DisplayNameFor(x => x.Bills[0].ScheduleTimeUtc)</th>
+            <th>@Html.DisplayNameFor(x => x.Bills[0].BillStatus)</th>
+            <th></th>
+        </tr>
+        @foreach (var bill in Model.Bills)
+        {
+            var isBlocked = bill.BillStatus == BillStatus.Blocked;
+            <tr>
+                <td>@Html.DisplayFor(x => bill.PayeeID)</td>
+                <td>@Html.DisplayFor(x => bill.Account)</td>
+                <td>@Html.DisplayFor(x => bill.AccountNumber)</td>
+                <td>@Html.DisplayFor(x => bill.ScheduleTimeUtc)</td>
+                <td>@Html.DisplayFor(x => bill.BillStatus)</td>
+                <td>
+                    @if (isBlocked)
+                    {
+                        <a class="btn btn-primary" asp-action="UnblockBill" asp-route-customerId="@Model.CustomerID" asp-route-billId="@bill.BillPayID">Unblock</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger" asp-action="BlockBill" asp-route-customerId="@Model.CustomerID" asp-route-billId="@bill.BillPayID">Block</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <a asp-controller="Customer" asp-action="Index">Return to Customers</a>
+</div>
+

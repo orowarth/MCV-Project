@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCBAWebApp", "MCBAWebApp\MCBAWebApp.csproj", "{431DA6A5-08F8-44FF-BF75-433E447DF157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCBAWebApp", "MCBAWebApp\MCBAWebApp.csproj", "{431DA6A5-08F8-44FF-BF75-433E447DF157}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCBADataLibrary", "MCBADataLibrary\MCBADataLibrary.csproj", "{548EB6A5-58DA-4A91-8107-37204B0FBCE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCBAAdminAPI", "MCBAAdminAPI\MCBAAdminAPI.csproj", "{BB5ECAAF-39B6-4D13-BE44-1B99D1FF6AD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCBAAdminSite", "MCBAAdminSite\MCBAAdminSite.csproj", "{7A6CFB91-6FE3-4EDE-B97E-572F22DC22B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCBAWebApp.Tests", "MCBAWebApp.Tests\MCBAWebApp.Tests.csproj", "{AD6BCC2B-5152-409B-AC42-64BD63714C63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431DA6A5-08F8-44FF-BF75-433E447DF157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548EB6A5-58DA-4A91-8107-37204B0FBCE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB5ECAAF-39B6-4D13-BE44-1B99D1FF6AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB5ECAAF-39B6-4D13-BE44-1B99D1FF6AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB5ECAAF-39B6-4D13-BE44-1B99D1FF6AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB5ECAAF-39B6-4D13-BE44-1B99D1FF6AD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A6CFB91-6FE3-4EDE-B97E-572F22DC22B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A6CFB91-6FE3-4EDE-B97E-572F22DC22B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A6CFB91-6FE3-4EDE-B97E-572F22DC22B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A6CFB91-6FE3-4EDE-B97E-572F22DC22B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD6BCC2B-5152-409B-AC42-64BD63714C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6BCC2B-5152-409B-AC42-64BD63714C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6BCC2B-5152-409B-AC42-64BD63714C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6BCC2B-5152-409B-AC42-64BD63714C63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
