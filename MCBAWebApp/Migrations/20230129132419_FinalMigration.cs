@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MCBAWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedCustomerImages : Migration
+    public partial class FinalMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCBAWebApp.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20230122025450_AddedCustomerImages")]
-    partial class AddedCustomerImages
+    [Migration("20230129132419_FinalMigration")]
+    partial class FinalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

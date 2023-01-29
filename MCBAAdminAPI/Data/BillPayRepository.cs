@@ -14,6 +14,9 @@ public class BillPayRepository : IBillPayRepository
         _context = context;
     }
 
+    /*
+     * Retrieves all bills based on a customer ID 
+     */
     public async Task<IEnumerable<BillPay>> GetAllByCustomerId(int id)
     {
         return await _context.BillPayments
@@ -21,6 +24,9 @@ public class BillPayRepository : IBillPayRepository
             .ToListAsync();
     }
 
+    /*
+     * Blocks a bill based on a bill ID 
+     */
     public async Task BlockBill(int id)
     {
         var billToBlock = await _context.BillPayments.FindAsync(id);
@@ -28,6 +34,9 @@ public class BillPayRepository : IBillPayRepository
         await _context.SaveChangesAsync();
     }
 
+    /*
+     * Unblocks a bill based on a bill ID 
+     */
     public async Task UnblockBill(int id)
     {
         var billToBlock = await _context.BillPayments.FindAsync(id);

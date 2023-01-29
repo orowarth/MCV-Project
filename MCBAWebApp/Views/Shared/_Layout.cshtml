@@ -57,23 +57,23 @@
                             <li class="nav-item mx-1">
                                 <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                             </li>
+                            @if (hasImage)
+                            {
+                                <li class="nav-item mx-1">
+                                    <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" alt="" class="rounded profile-image" />
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item mx-1">
+                                    <img src="@Url.Content("~/DefaultPerson.png")" width="65" alt="" class="rounded" />
+                                </li>
+                            }
                         }
                         else
                         {
                             <li class="nav-item mx-1">
                                 <a class="nav-link text-dark btn btn-outline-secondary" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
-                            </li>
-                        }
-                        @if (hasImage)
-                        {
-                            <li class="nav-item mx-1">
-                                <img src="data:image;base64, @Context.Session.GetString(nameof(Customer.Image))" width="65" alt="" class="rounded" />
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item mx-1">
-                                <img src="@Url.Content("~/DefaultPerson.png")" width="65" alt="" class="rounded" />
                             </li>
                         }
                     </ul>

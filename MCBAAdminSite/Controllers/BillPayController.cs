@@ -1,9 +1,11 @@
-﻿using MCBAAdminSite.Models;
+﻿using MCBAAdminSite.Filters;
+using MCBAAdminSite.Models;
 using MCBADataLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MCBAAdminSite.Controllers;
 
+[AuthorizeAdmin]
 public class BillPayController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;

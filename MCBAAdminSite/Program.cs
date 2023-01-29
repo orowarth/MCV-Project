@@ -5,7 +5,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("Admin", httpClient =>
 {
-    httpClient.BaseAddress = new Uri("https://localhost:3000/api/");
+    httpClient.BaseAddress = new Uri("http://localhost:5060/api/");
 });
 
 builder.Services.AddDistributedMemoryCache();

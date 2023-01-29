@@ -46,3 +46,13 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.edit-profile-image {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.profile-image {
+  max-width: 65px;
+  max-height: 65px;
+}
