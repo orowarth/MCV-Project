@@ -2,6 +2,13 @@
 Oliver Rowarth - s3868494
 James Ogilvie - s3782490
 
+# GitHub
+https://github.com/rmit-wdt-fs-2023/s3868494-s3782490-a2
+
+# Trello
+https://trello.com/invite/b/pjcS7Zgs/ATTIe6a5a5245e46ca891b5f5421f24ac83c9647D1E8/wdt-assignment-2
+
+
 ## Project Structure
 This project consists of three web projects, one class library, and one xUnit project.
 
