@@ -50,3 +50,9 @@ For this part of the assignment we attempted all relevant sections in the rubric
 - BillPay blocking / unblocking
 
 It also includes a HttpClientFactory for consuming the Admin API enpoints which performs the necessary backend operations.
+
+### MCBAWebApp.Tests xUnit Tests
+This project contains tests covering the customer MVC website.
+It covers ATM / Transfer features, profile features, statement features, and login features. 
+
+We would have liked to test more extensively and to have also tested the other projects but by the end we had run out of steam and found many of the issues that blocked our way took too much time to solve, such as complex object mocking and mocking objects which use extension methods, also how model validation may not explicitly be triggered sometimes (see ProfileControllerTests line 156 and try with and without manual model validation)
